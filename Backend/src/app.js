@@ -1,9 +1,9 @@
 //create server
-const dotenv = require("dotenv");
-dotenv.config({ path: "./.env" });
+require("dotenv").config();
 const express = require("express");
 const cookieParser = require("cookie-parser");
-const authRouter = require("./routes/auth.routes");
+const userRouter = require("./routes/user.routes");
+const foodPartnerRouter = require("./routes/foodPartner.routes");
 
 const app = express();
 app.use(express.json());
@@ -14,6 +14,7 @@ app.get("/", (req, res) => {
   res.send("Hello World");
 });
 
-app.use("/api/auth", authRouter);
+app.use("/api/auth", userRouter);
+app.use("/api/auth", foodPartnerRouter);
 
 module.exports = app;
