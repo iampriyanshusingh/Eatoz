@@ -4,6 +4,7 @@ const express = require("express");
 const cookieParser = require("cookie-parser");
 const userRouter = require("./routes/user.routes");
 const foodPartnerRouter = require("./routes/foodPartner.routes");
+const foodRouter = require("./routes/food.routes");
 
 const app = express();
 app.use(express.json());
@@ -16,5 +17,6 @@ app.get("/", (req, res) => {
 
 app.use("/api/auth", userRouter);
 app.use("/api/auth", foodPartnerRouter);
+app.use("/api/food", foodRouter);
 
 module.exports = app;
