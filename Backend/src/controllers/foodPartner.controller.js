@@ -9,7 +9,15 @@ module.exports.registerFoodPartner = async (req, res, next) => {
     });
   }
 
-  const { fullName, email, password } = req.body;
+  const {
+    buisnessName,
+    fullName,
+    email,
+    phoneNumber,
+    address,
+    cuisineType,
+    password,
+  } = req.body;
 
   const isPartnerExist = await foodPartnerModel.findOne({ email });
   if (isPartnerExist) {
@@ -21,8 +29,12 @@ module.exports.registerFoodPartner = async (req, res, next) => {
   const hashedPassword = await foodPartnerModel.hashedPassword(password);
 
   const foodPartner = await foodPartnerModel.create({
+    buisnessName,
     fullName,
     email,
+    phoneNumber,
+    address,
+    cuisineType,
     password: hashedPassword,
   });
 

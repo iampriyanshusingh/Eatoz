@@ -4,6 +4,10 @@ const bcrypt = require("bcrypt");
 
 const foodPartnerSchema = new mongoose.Schema(
   {
+    buisnessName: {
+      type: String,
+      required: true,
+    },
     fullName: {
       type: String,
       required: true,
@@ -12,6 +16,32 @@ const foodPartnerSchema = new mongoose.Schema(
       type: String,
       required: true,
       unique: true,
+    },
+    phoneNumber: {
+      type: Number,
+      required: true,
+    },
+    address: {
+      type: String,
+      required: true,
+      minlength: 3,
+      maxlength: 40,
+    },
+    cuisineType: {
+      type: String,
+      required: true,
+      enum: [
+        "indian",
+        "chinese",
+        "italian",
+        "mexican",
+        "thai",
+        "continental",
+        "fast-food",
+        "desserts",
+        "beverages",
+        "other",
+      ],
     },
     password: {
       type: String,

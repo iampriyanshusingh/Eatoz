@@ -15,6 +15,7 @@ router.post(
     body("password")
       .isLength({ min: 6 })
       .withMessage("Password must be 6 character long"),
+    body("phoneNumber").isMobilePhone().withMessage("Phone Must be in Numbers"),
   ],
   userController.registerUser
 );

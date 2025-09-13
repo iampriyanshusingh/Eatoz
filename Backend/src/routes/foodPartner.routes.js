@@ -5,9 +5,25 @@ const middlewareFoodPartner = require("../middlewares/foodPartner.middleware");
 
 const router = express.Router();
 
+const cuisineOptions = [
+  "indian",
+  "chinese",
+  "italian",
+  "mexican",
+  "thai",
+  "continental",
+  "fast-food",
+  "desserts",
+  "beverages",
+  "other",
+];
+
 router.post(
   "/foodPartner/register",
   [
+    body("buisnessName")
+      .isLength({ min: 3 })
+      .withMessage("Length Should be atleast 3"),
     body("fullName")
       .isLength({ min: 3, max: 10 })
       .withMessage("Name must be 3 length long"),
@@ -15,6 +31,15 @@ router.post(
     body("password")
       .isLength({ min: 6 })
       .withMessage("Password must be 6 character long"),
+    body("phoneNumber")
+      .isMobilePhone()
+      .withMessage("Phone Number Should be valid"),
+    body("address")
+      .isLength({ min: 3, max: 40 })
+      .withMessage("Address should be more accurate"),
+    body("cuisineType")
+      .isIn(cuisineOptions)
+      .withMessage("Invalid cuisine type"),
   ],
   foodPartnerController.registerFoodPartner
 );

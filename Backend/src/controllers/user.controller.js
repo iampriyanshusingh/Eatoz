@@ -10,7 +10,7 @@ module.exports.registerUser = async (req, res, next) => {
     });
   }
 
-  const { fullName, email, password } = req.body;
+  const { fullName, email, password, phoneNumber } = req.body;
 
   const isUserExist = await userModel.findOne({ email });
 
@@ -26,6 +26,7 @@ module.exports.registerUser = async (req, res, next) => {
     fullName,
     email,
     password: hashedPassword,
+    phoneNumber,
   });
 
   const token = user.generateAuthToken();

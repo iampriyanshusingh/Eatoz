@@ -1,0 +1,7 @@
+- Update color palette in variables.css to Gen-Z aesthetic (pastel/vibrant colors)
+- Add modern font (Poppins) import and set in variables
+- Add icon styles and animations in shared.css
+- Update auth pages JSX to include icons in form inputs
+- Add floating animation to logo
+- Update gradients and backgrounds for more aesthetic look
+- Test the changes by running dev server
