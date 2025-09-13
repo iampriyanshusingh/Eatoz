@@ -1,33 +1,68 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import '../../styles/shared.css';
+import React from "react";
+import { Link } from "react-router-dom";
+import "../../styles/shared.css";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const FoodPartnerRegister = () => {
-  const handleSubmit = (e) => {
+  const navigate = useNavigate();
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // TODO: Implement partner registration logic
+
+    const buisnessName = e.target.buisnessName.value;
+    const fullName = e.target.fullName.value;
+    const email = e.target.email.value;
+    const phoneNumber = e.target.phoneNumber.value;
+    const address = e.target.address.value;
+    const cuisineType = e.target.cuisineType.value;
+    const password = e.target.password.value;
+
+    try {
+      await axios.post(
+        "http://localhost:3000/api/auth/foodPartner/register",
+        {
+          buisnessName,
+          fullName,
+          email,
+          phoneNumber,
+          address,
+          cuisineType,
+          password,
+        },
+        {
+          withCredentials: true,
+        }
+      );
+
+      navigate("/create-food");
+    } catch (error) {
+      alert(
+        "Registration failed: " +
+          (error.response?.data?.message || error.message)
+      );
+    }
   };
 
   return (
     <div className="auth-container">
       <div className="auth-card">
         <div className="auth-header">
-          <div className="auth-logo">
-            🏪
-          </div>
+          <div className="auth-logo">🏪</div>
           <h1 className="auth-title">Partner Registration</h1>
-          <p className="auth-subtitle">Join Eatoz as a food partner and grow your business</p>
+          <p className="auth-subtitle">
+            Join Eatoz as a food partner and grow your business
+          </p>
         </div>
 
         <form className="auth-form" onSubmit={handleSubmit}>
           <div className="form-group">
-            <label htmlFor="businessName" className="form-label">
+            <label htmlFor="buisnessName" className="form-label">
               Business Name
             </label>
             <input
               type="text"
-              id="businessName"
-              name="businessName"
+              id="buisnessName"
+              name="buisnessName"
               className="form-input"
               placeholder="Enter your business name"
               required
@@ -35,13 +70,13 @@ const FoodPartnerRegister = () => {
           </div>
 
           <div className="form-group">
-            <label htmlFor="ownerName" className="form-label">
+            <label htmlFor="fullName" className="form-label">
               Owner Name
             </label>
             <input
               type="text"
-              id="ownerName"
-              name="ownerName"
+              id="fullName"
+              name="fullName"
               className="form-input"
               placeholder="Enter owner's full name"
               required
@@ -63,13 +98,13 @@ const FoodPartnerRegister = () => {
           </div>
 
           <div className="form-group">
-            <label htmlFor="phone" className="form-label">
+            <label htmlFor="phoneNumber" className="form-label">
               Contact Number
             </label>
             <input
               type="tel"
-              id="phone"
-              name="phone"
+              id="phoneNumber"
+              name="phoneNumber"
               className="form-input"
               placeholder="Enter contact number"
               required
@@ -128,16 +163,29 @@ const FoodPartnerRegister = () => {
             />
           </div>
 
-
           <div className="form-group">
-            <label style={{ display: 'flex', alignItems: 'flex-start', gap: '8px', fontSize: '14px', color: 'var(--text-secondary)', cursor: 'pointer' }}>
-              <input type="checkbox" name="terms" style={{ marginTop: '2px' }} required />
+            <label
+              style={{
+                display: "flex",
+                alignItems: "flex-start",
+                gap: "8px",
+                fontSize: "14px",
+                color: "var(--text-secondary)",
+                cursor: "pointer",
+              }}
+            >
+              <input
+                type="checkbox"
+                name="terms"
+                style={{ marginTop: "2px" }}
+                required
+              />
               <span>
-                I agree to the{' '}
+                I agree to the{" "}
                 <Link to="/terms" className="auth-link">
                   Terms of Service
-                </Link>{' '}
-                and{' '}
+                </Link>{" "}
+                and{" "}
                 <Link to="/privacy" className="auth-link">
                   Privacy Policy
                 </Link>
@@ -152,13 +200,13 @@ const FoodPartnerRegister = () => {
 
         <div className="auth-footer">
           <p className="auth-footer-text">
-            Already a partner?{' '}
+            Already a partner?{" "}
             <Link to="/food-partner/login" className="auth-link">
               Sign in here
             </Link>
           </p>
           <p className="auth-footer-text">
-            Looking to order food?{' '}
+            Looking to order food?{" "}
             <Link to="/user/register" className="auth-link">
               Register as customer
             </Link>

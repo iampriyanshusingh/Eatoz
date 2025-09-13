@@ -25,14 +25,14 @@ router.post(
       .isLength({ min: 3 })
       .withMessage("Length Should be atleast 3"),
     body("fullName")
-      .isLength({ min: 3, max: 10 })
+      .isLength({ min: 3, max: 50 })
       .withMessage("Name must be 3 length long"),
     body("email").isEmail().withMessage("Invalid Email"),
     body("password")
       .isLength({ min: 6 })
       .withMessage("Password must be 6 character long"),
     body("phoneNumber")
-      .isMobilePhone()
+      .isMobilePhone("any", { strictMode: false })
       .withMessage("Phone Number Should be valid"),
     body("address")
       .isLength({ min: 3, max: 40 })
@@ -60,4 +60,12 @@ router.get(
   middlewareFoodPartner.authFoodPartner,
   foodPartnerController.logoutFoodPartner
 );
+
+/* /api/food-partner/:id */
+router.get(
+  "/foodPartner/:id",
+  middlewareFoodPartner.authFoodPartner,
+  foodPartnerController.getFoodPartnerById
+);
+
 module.exports = router;

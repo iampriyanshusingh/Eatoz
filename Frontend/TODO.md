@@ -1,7 +1,5 @@
-- Update color palette in variables.css to Gen-Z aesthetic (pastel/vibrant colors)
-- Add modern font (Poppins) import and set in variables
-- Add icon styles and animations in shared.css
-- Update auth pages JSX to include icons in form inputs
-- Add floating animation to logo
-- Update gradients and backgrounds for more aesthetic look
-- Test the changes by running dev server
+- [x] Update Home.jsx to implement reels-like UI with vertical scrolling videos
+- [x] Add dummy video data array
+- [x] Style the container with scroll-snap for full-screen videos
+- [x] Add overlay for description (truncated to 2 lines) and "visit store" button on each video
+- [ ] Test the implementation
