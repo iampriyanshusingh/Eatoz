@@ -63,6 +63,8 @@
 .profile-address {
   font-size: 1.05rem;
   color: var(--color-text-secondary);
+  white-space: pre-line;
+  display: block;
 }
 
 /* Stats */

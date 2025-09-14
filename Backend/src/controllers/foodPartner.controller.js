@@ -1,5 +1,6 @@
 const foodPartnerModel = require("../models/foodPartner.model");
 const { validationResult } = require("express-validator");
+const foodModel = require("../models/food.model");
 
 module.exports.registerFoodPartner = async (req, res, next) => {
   const errors = validationResult(req);
