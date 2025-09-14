@@ -35,7 +35,7 @@ router.post(
       .isMobilePhone("any", { strictMode: false })
       .withMessage("Phone Number Should be valid"),
     body("address")
-      .isLength({ min: 3, max: 40 })
+      .isLength({ min: 3, max: 100 })
       .withMessage("Address should be more accurate"),
     body("cuisineType")
       .isIn(cuisineOptions)

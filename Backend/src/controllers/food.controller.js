@@ -5,6 +5,10 @@ const saveModel = require("../models/save.model");
 const { v4: uuid } = require("uuid");
 
 module.exports.createFood = async (req, res, next) => {
+  if (!req.foodPartner) {
+    return res.status(401).json({ message: "Unauthorized" });
+  }
+
   const fileUploadResult = await storageService.uploadFile(
     req.file.buffer,
     uuid()

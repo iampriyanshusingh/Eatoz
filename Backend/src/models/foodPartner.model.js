@@ -25,7 +25,7 @@ const foodPartnerSchema = new mongoose.Schema(
       type: String,
       required: true,
       minlength: 3,
-      maxlength: 40,
+      maxlength: 100,
     },
     cuisineType: {
       type: String,

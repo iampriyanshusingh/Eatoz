@@ -9,9 +9,20 @@ const CreateFood = () => {
   const [videoFile, setVideoFile] = useState(null);
   const [videoURL, setVideoURL] = useState("");
   const [fileError, setFileError] = useState("");
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const fileInputRef = useRef(null);
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    // Check if logged in by trying a protected route for foodPartner
+    axios
+      .get("http://localhost:3000/api/auth/foodPartner/me", {
+        withCredentials: true,
+      })
+      .then(() => setIsLoggedIn(true))
+      .catch(() => setIsLoggedIn(false));
+  }, []);
 
   useEffect(() => {
     if (!videoFile) {
@@ -22,6 +33,18 @@ const CreateFood = () => {
     setVideoURL(url);
     return () => URL.revokeObjectURL(url);
   }, [videoFile]);
+
+  const handleLogout = async () => {
+    try {
+      await axios.get("http://localhost:3000/api/auth/foodPartner/logout", {
+        withCredentials: true,
+      });
+      setIsLoggedIn(false);
+      navigate("/food-partner/login");
+    } catch (error) {
+      console.error("Logout failed", error);
+    }
+  };
 
   const onFileChange = (e) => {
     const file = e.target.files && e.target.files[0];
@@ -72,7 +95,8 @@ const CreateFood = () => {
       withCredentials: true,
     });
 
-    navigate("/"); // Redirect to home or another page after successful creation
+    window.location.reload();
+    // navigate("/create-food"); // Redirect to home or another page after successful creation
     // Optionally reset
     // setName(''); setDescription(''); setVideoFile(null);
   };
@@ -84,6 +108,27 @@ const CreateFood = () => {
 
   return (
     <div className="create-food-page">
+      {isLoggedIn && (
+        <button
+          onClick={handleLogout}
+          className="logout-button"
+          style={{
+            position: "fixed",
+            top: "10px",
+            left: "87%",
+            transform: "translateX(-50%)",
+            padding: "8px 16px",
+            backgroundColor: "#f44336",
+            color: "white",
+            border: "none",
+            borderRadius: "4px",
+            cursor: "pointer",
+            zIndex: 1000,
+          }}
+        >
+          Logout
+        </button>
+      )}
       <div className="create-food-card">
         <header className="create-food-header">
           <h1 className="create-food-title">Create Food</h1>
@@ -223,9 +268,24 @@ const CreateFood = () => {
             />
           </div>
 
-          <div className="form-actions">
+          <div
+            className="form-actions"
+            style={{ display: "flex", gap: "10px", alignItems: "center" }}
+          >
             <button className="btn-primary" type="submit" disabled={isDisabled}>
               Save Food
+            </button>
+            <button
+              type="button"
+              className="btn-primary"
+              onClick={handleLogout}
+              style={{
+                marginLeft: "auto",
+                padding: "9px 18px",
+                background: "red",
+              }}
+            >
+              Logout
             </button>
           </div>
         </form>

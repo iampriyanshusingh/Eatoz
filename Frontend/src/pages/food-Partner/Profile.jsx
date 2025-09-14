@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from "react";
 import "../../styles/profile.css";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const Profile = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [profile, setProfile] = useState(null);
   const [videos, setVideos] = useState([]);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
     axios
@@ -16,8 +18,24 @@ const Profile = () => {
       .then((response) => {
         setProfile(response.data.foodPartner);
         setVideos(response.data.foodPartner.foodItems);
+        setIsLoggedIn(true);
+      })
+      .catch(() => {
+        setIsLoggedIn(false);
       });
   }, [id]);
+
+  const handleLogout = async () => {
+    try {
+      await axios.get("http://localhost:3000/api/auth/foodPartner/logout", {
+        withCredentials: true,
+      });
+      setIsLoggedIn(false);
+      navigate("/food-partner/login");
+    } catch (error) {
+      console.error("Logout failed", error);
+    }
+  };
 
   return (
     <main className="profile-page">
@@ -42,15 +60,35 @@ const Profile = () => {
         <div className="profile-stats" role="list" aria-label="Stats">
           <div className="profile-stat" role="listitem">
             <span className="profile-stat-label">total meals</span>
-            <span className="profile-stat-value">{profile?.totalMeals}</span>
+            <span className="profile-stat-value">15</span>
           </div>
           <div className="profile-stat" role="listitem">
             <span className="profile-stat-label">customer served</span>
-            <span className="profile-stat-value">
-              {profile?.customersServed}
-            </span>
+            <span className="profile-stat-value">30K</span>
           </div>
         </div>
+
+        {isLoggedIn && (
+          <button
+            onClick={handleLogout}
+            className="logout-button"
+            style={{
+              position: "fixed",
+              top: "10px",
+              left: "87%",
+              transform: "translateX(-50%)",
+              padding: "8px 16px",
+              backgroundColor: "#f44336",
+              color: "white",
+              border: "none",
+              borderRadius: "4px",
+              cursor: "pointer",
+              zIndex: 1000,
+            }}
+          >
+            Logout
+          </button>
+        )}
       </section>
 
       <hr className="profile-sep" />

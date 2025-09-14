@@ -2,9 +2,12 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "../../styles/reels.css";
 import ReelFeed from "../../components/ReelFeed";
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
   const [videos, setVideos] = useState([]);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const navigate = useNavigate();
   // Autoplay behavior is handled inside ReelFeed
 
   useEffect(() => {
@@ -14,11 +17,25 @@ const Home = () => {
         console.log(response.data);
 
         setVideos(response.data.foodItems);
+        setIsLoggedIn(true);
       })
       .catch(() => {
+        setIsLoggedIn(false);
         /* noop: optionally handle error */
       });
   }, []);
+
+  const handleLogout = async () => {
+    try {
+      await axios.get("http://localhost:3000/api/auth/user/logout", {
+        withCredentials: true,
+      });
+      setIsLoggedIn(false);
+      navigate("/user/login");
+    } catch (error) {
+      console.error("Logout failed", error);
+    }
+  };
 
   // Using local refs within ReelFeed; keeping map here for dependency parity if needed
 
@@ -79,12 +96,35 @@ const Home = () => {
   }
 
   return (
-    <ReelFeed
-      items={videos}
-      onLike={likeVideo}
-      onSave={saveVideo}
-      emptyMessage="No videos available."
-    />
+    <div>
+      {isLoggedIn && (
+        <button
+          onClick={handleLogout}
+          className="logout-button"
+          style={{
+            position: "fixed",
+            top: "10px",
+            left: "87%",
+            transform: "translateX(-50%)",
+            padding: "8px 16px",
+            backgroundColor: "#f44336",
+            color: "white",
+            border: "none",
+            borderRadius: "4px",
+            cursor: "pointer",
+            zIndex: 1000,
+          }}
+        >
+          Logout
+        </button>
+      )}
+      <ReelFeed
+        items={videos}
+        onLike={likeVideo}
+        onSave={saveVideo}
+        emptyMessage="No videos available."
+      />
+    </div>
   );
 };
 
