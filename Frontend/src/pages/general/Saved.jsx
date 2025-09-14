@@ -11,7 +11,7 @@ const Saved = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:3000/api/food/save", { withCredentials: true })
+      .get("/api/food/save", { withCredentials: true })
       .then((response) => {
         const savedFoods = response.data.savedFoods.map((item) => ({
           _id: item.food._id,
@@ -32,7 +32,7 @@ const Saved = () => {
 
   const handleLogout = async () => {
     try {
-      await axios.get("http://localhost:3000/api/auth/user/logout", {
+      await axios.get("/api/auth/user/logout", {
         withCredentials: true,
       });
       setIsLoggedIn(false);
@@ -45,7 +45,7 @@ const Saved = () => {
   const removeSaved = async (item) => {
     try {
       await axios.post(
-        "http://localhost:3000/api/food/save",
+        "/api/food/save",
         { foodId: item._id },
         { withCredentials: true }
       );

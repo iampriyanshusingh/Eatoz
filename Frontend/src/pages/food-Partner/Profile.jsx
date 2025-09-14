@@ -12,7 +12,7 @@ const Profile = () => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:3000/api/auth/foodPartner/${id}`, {
+      .get(`/api/auth/foodPartner/${id}`, {
         withCredentials: true,
       })
       .then((response) => {
@@ -27,7 +27,7 @@ const Profile = () => {
 
   const handleLogout = async () => {
     try {
-      await axios.get("http://localhost:3000/api/auth/foodPartner/logout", {
+      await axios.get("/api/auth/foodPartner/logout", {
         withCredentials: true,
       });
       setIsLoggedIn(false);

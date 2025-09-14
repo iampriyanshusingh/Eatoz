@@ -19,7 +19,7 @@ const FoodPartnerRegister = () => {
 
     try {
       await axios.post(
-        "http://localhost:3000/api/auth/foodPartner/register",
+        "/api/auth/foodPartner/register",
         {
           buisnessName,
           fullName,

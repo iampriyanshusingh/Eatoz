@@ -17,7 +17,7 @@ const CreateFood = () => {
   useEffect(() => {
     // Check if logged in by trying a protected route for foodPartner
     axios
-      .get("http://localhost:3000/api/auth/foodPartner/me", {
+      .get("/api/auth/foodPartner/me", {
         withCredentials: true,
       })
       .then(() => setIsLoggedIn(true))
@@ -36,7 +36,7 @@ const CreateFood = () => {
 
   const handleLogout = async () => {
     try {
-      await axios.get("http://localhost:3000/api/auth/foodPartner/logout", {
+      await axios.get("/api/auth/foodPartner/logout", {
         withCredentials: true,
       });
       setIsLoggedIn(false);
@@ -91,7 +91,7 @@ const CreateFood = () => {
     formData.append("description", description);
     formData.append("video", videoFile);
 
-    await axios.post("http://localhost:3000/api/food", formData, {
+    await axios.post("/api/food", formData, {
       withCredentials: true,
     });
 

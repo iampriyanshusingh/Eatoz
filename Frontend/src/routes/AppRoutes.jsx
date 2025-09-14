@@ -13,7 +13,7 @@ import Home from "../pages/general/Home";
 import CreateFood from "../pages/food-Partner/CreateFood";
 import Saved from "../pages/general/Saved";
 import BottomNav from "../components/BottomNav";
-import Profile from "../pages/food-partner/Profile";
+import Profile from "../pages/food-Partner/Profile";
 
 const AppRoutes = () => {
   return (

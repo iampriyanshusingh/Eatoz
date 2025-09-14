@@ -12,7 +12,7 @@ const Home = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:3000/api/food", { withCredentials: true })
+      .get("/api/food", { withCredentials: true })
       .then((response) => {
         console.log(response.data);
 
@@ -27,7 +27,7 @@ const Home = () => {
 
   const handleLogout = async () => {
     try {
-      await axios.get("http://localhost:3000/api/auth/user/logout", {
+      await axios.get("/api/auth/user/logout", {
         withCredentials: true,
       });
       setIsLoggedIn(false);
@@ -42,7 +42,7 @@ const Home = () => {
   async function likeVideo(item) {
     try {
       const response = await axios.post(
-        "http://localhost:3000/api/food/like",
+        "/api/food/like",
         { foodId: item._id },
         { withCredentials: true }
       );
@@ -71,7 +71,7 @@ const Home = () => {
   async function saveVideo(item) {
     try {
       const response = await axios.post(
-        "http://localhost:3000/api/food/save",
+        "/api/food/save",
         { foodId: item._id },
         { withCredentials: true }
       );
